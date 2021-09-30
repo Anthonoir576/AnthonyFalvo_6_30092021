@@ -6,14 +6,33 @@ const app = express();
 
 /* ################################################ */
 
+app.use((request, response, next) => {
+
+    console.log('requete recu');
+    next();
+
+});
+
+app.use((request, response, next) => {
+
+    response.status(201);
+    next();
+
+});
+
+app.use((request, response, next) => {
+
+    response.json({message: 'ok'});
+    next();
+
+});
 
 
 app.use((request, response) => {
 
-    response.json({message: 'ok'})
-
+    console.log('reponse envoyé succès');
+  
 });
-
 
 
 /* ##############    EXPORT     ################### */
