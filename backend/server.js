@@ -11,15 +11,19 @@ const server = http.createServer((request, response) => {
 
 });
 
-// Si l'environnement sur lequel tourne le serveur envoie un port a utilisé, ou sinon par defaut le port 3000
-server.listen(process.env.port || 3000);
+
 /* ################################################ */
 
 
 
 
 
+/* ################  SERVEUR  ##################### */
 
+// Si l'environnement sur lequel tourne le serveur envoie un port a utilisé, ou sinon par defaut le port 3000
+server.listen(process.env.port || 3000);
+
+/* ################################################ */
 
 
 

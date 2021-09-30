@@ -1,4 +1,5 @@
-# Projet_Officiel_OpenClassRooms_P6 - Sujet : Construisez une API sécurisée pour une application d'avis gastronomiques
+# OpenClassrooms Projet 06 
+## Construisez une API sécurisée pour une application d'avis gastronomiques
 
 ## Pour tester l'application
 1. Cloner le repository
