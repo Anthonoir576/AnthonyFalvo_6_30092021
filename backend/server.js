@@ -3,11 +3,11 @@
 
 // const http qui permet l'accès a l'objet http et créer un serveur
 const http = require('http');
+
 // importation de app depuis app.js
 const app = require('./app');
 
 /* ################################################ */
-
 
 
 
@@ -24,12 +24,6 @@ const server = http.createServer(app);
 server.listen(process.env.port || 3000);
 
 /* ################################################ */
-
-
-
-
-
-
 
 
 
