@@ -1,13 +1,22 @@
 /* ##########   MES DECLARATIONS   ################ */
 
-// import express
+// importation package => express
 const express = require('express');
 
 // application express
 const app = express();
 
-/* ################################################ */
+// importation package => mongoose
+const mongoose = require('mongoose');
 
+// Connection a la DB mongoDB Atlas
+mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroom.bum0m.mongodb.net/Projet-06-Openclassrooms?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
+
+/* ################################################ */
 
 
 
