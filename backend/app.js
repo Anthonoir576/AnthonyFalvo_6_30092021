@@ -11,7 +11,9 @@ const app = express();
 const mongoose = require('mongoose');
 
 // importation des routes concernant les sauces suivant les différentes requêtes
-const sauceRoute = require('./routes/sauceRoute');
+const sauceRoutes = require('./routes/sauceRoute');
+// importation des routes concernant les users suivant les différentes requêtes
+const userRoutes = require('./routes/userRoute');
 
 // Connection a la DB mongoDB Atlas
 mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroom.bum0m.mongodb.net/Projet-06-Openclassrooms?retryWrites=true&w=majority',
@@ -22,7 +24,9 @@ mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroo
 
 /* ################################################ */
 
-/*                    *******                       */
+
+
+
 
 /* ##############    CORS   ####################### */
 // Permet notamment d'eviter les requêtes indésirables
@@ -42,16 +46,22 @@ app.use((request, response, next) => {
 
 /* ################################################ */
 
-/*                    *******                       */
+
+
+
 
 /* #############   MIDDLEWARE   ################### */
 
 // toute les routes effectuer sur les sauces
-app.use('/api/sauces', sauceRoute);
+app.use('/api/sauces', sauceRoutes);
+// toute les routes effectuer sur les users
+app.use('/api/auth', userRoutes);
 
 /* ################################################ */
 
-/*                    *******                       */
+
+
+
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */
 
@@ -61,7 +71,9 @@ app.use(express.json());
 
 /* ################################################ */
 
-/*                    *******                       */
+
+
+
 
 /* ##############    EXPORT     ################### */
 

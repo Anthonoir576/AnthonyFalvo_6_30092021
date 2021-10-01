@@ -6,7 +6,7 @@ const Sauce = require('../models/Sauce');
 
 /* ################################################ */
 
-/*                    *******                       */
+
 
 /* ############   CONTROLLERS   ################### */
 // Creation d'une nouvelle sauce dans la DB
