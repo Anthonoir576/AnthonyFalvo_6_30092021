@@ -1,12 +1,12 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "API_SECURE",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "",
+  "author": "Anthony",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
