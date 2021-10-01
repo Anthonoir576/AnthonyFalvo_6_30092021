@@ -2,6 +2,7 @@
 /* ##########   MES DECLARATIONS   ################ */
 
 // importation package => express
+const { response } = require('express');
 const express = require('express');
 
 // application express
@@ -52,11 +53,41 @@ app.use(express.json());
 
 /* ################################################ */
 
+/* !!!!!  VERIFIER SI LE USERID EST DEDANS AU TEST !!!!!!!!!! */
+// Creation d'une nouvelle sauce dans la DB
+app.post('/api/sauces', (request, response, next) => {
+    delete request.body._id;
+    const sauce = new Sauce({
 
-app.post('/api/stuff', (request, response, next) => {
+        ...request.body,
+        likes: 0,
+        dislikes : 0,
+        usersLiked : [], 
+        usersDisliked : [] 
 
-    console.log(request.body);
-    response.status(201).json({ message: 'salut'});
+    });
+
+    sauce.save()
+        .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
+        .catch(error => response.status(400).json({ error }));
+
+});
+
+// Affichage d'une sauce de la DB
+app.get('/api/sauces/:id', (request, response, next) => {
+
+    Sauce.findOne({ _id: request.params.id })
+    .then(sauce => response.status(200).json(sauce))
+    .catch(error => response.status(404).json({ error }));
+
+});
+
+// Recupere toutes les sauces de la DB
+app.get('/api/sauces', (request, response, next) => {
+
+    Sauce.find()
+        .then(sauces => response.status(200).json(sauces))
+        .catch(error => response.status(400).json({ error }));
 
 });
 
