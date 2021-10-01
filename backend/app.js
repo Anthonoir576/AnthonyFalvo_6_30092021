@@ -73,6 +73,24 @@ app.post('/api/sauces', (request, response, next) => {
 
 });
 
+// Modification d'une sauce de la DB
+app.put('/api/sauces/:id', (request, response, next) => {
+
+    Sauce.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id })
+    .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
+    .catch( error => response.status(400).json({ error }));
+
+});
+
+// Suppression d'une sauce de la DB
+app.delete('/api/sauces/:id', (request, response, next) => {
+
+    Sauce.deleteOne({ _id: request.params.id})
+        .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
+        .catch(error => response.status(400).json({ error }));
+
+});
+
 // Affichage d'une sauce de la DB
 app.get('/api/sauces/:id', (request, response, next) => {
 
