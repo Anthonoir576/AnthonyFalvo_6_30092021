@@ -1,6 +1,14 @@
+
+/* ##########   MES DECLARATIONS   ################ */
+
 // importation modèle de SAUCE depuis le fichier js
 const Sauce = require('../models/Sauce');
 
+/* ################################################ */
+
+/*                    *******                       */
+
+/* ############   CONTROLLERS   ################### */
 // Creation d'une nouvelle sauce dans la DB
 exports.createSauce =  (request, response, next) => {
     delete request.body._id;
@@ -55,3 +63,4 @@ exports.getAllSauce =  (request, response, next) => {
         .catch(error => response.status(400).json({ error }));
 
 };
+/* ################################################ */
