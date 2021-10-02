@@ -4,6 +4,9 @@
 // package de hachage de mdp
 const bcrypt = require('bcrypt');
 
+// Importation de token et verification
+const jwt = require('jsonwebtoken');
+
 // importation modèle de SAUCE depuis le fichier js
 const User = require('../models/User');
 
@@ -40,7 +43,11 @@ exports.login = (request, response, next) => {
                 }
                 response.status(200).json({
                     userId: user._id,
-                    token: 'TOKEN'
+                    token: jwt.sign(
+                        { userId: user._id},
+                        'KEY_TOKEN_SECRET',
+                        { expiresIn: '24h'}
+                    )
                 });
             })
             .catch(error => response.status(500).json({ error }));
