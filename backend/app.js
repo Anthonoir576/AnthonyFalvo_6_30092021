@@ -2,6 +2,7 @@
 /* ##########   MES DECLARATIONS   ################ */
 
 // importation package => express
+const { request } = require('express');
 const express = require('express');
 
 // application express
@@ -15,6 +16,8 @@ const sauceRoutes = require('./routes/sauceRoute');
 // importation des routes concernant les users suivant les différentes requêtes
 const userRoutes = require('./routes/userRoute');
 
+const path = require('path');
+
 // Connection a la DB mongoDB Atlas
 mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroom.bum0m.mongodb.net/Projet-06-Openclassrooms?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -26,9 +29,8 @@ mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroo
 
 
 
-
-
 /* ##############    CORS   ####################### */
+
 // Permet notamment d'eviter les requêtes indésirables
 // Autorisation de l'utilisation de l'api grace au argument passé aux différents headers et evite la sécurité CORS 
 app.use((request, response, next) => {
@@ -48,21 +50,6 @@ app.use((request, response, next) => {
 
 
 
-
-
-/* #############   MIDDLEWARE   ################### */
-
-// toute les routes effectuer sur les sauces
-app.use('/api/sauces', sauceRoutes);
-// toute les routes effectuer sur les users
-app.use('/api/auth', userRoutes);
-
-/* ################################################ */
-
-
-
-
-
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */
 
 // suite a la maj 4.16 bodyParser est intégrer a express
@@ -71,6 +58,18 @@ app.use(express.json());
 
 /* ################################################ */
 
+
+
+/* #############   MIDDLEWARE   ################### */
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// toute les routes effectuer sur les sauces
+app.use('/api/sauces', sauceRoutes);
+// toute les routes effectuer sur les users
+app.use('/api/auth', userRoutes);
+
+/* ################################################ */
 
 
 

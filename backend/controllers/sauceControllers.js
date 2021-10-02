@@ -4,6 +4,8 @@
 // importation modèle de SAUCE depuis le fichier js
 const Sauce = require('../models/Sauce');
 
+const fs = require('fs');
+
 /* ################################################ */
 
 
@@ -11,10 +13,12 @@ const Sauce = require('../models/Sauce');
 /* ############   CONTROLLERS   ################### */
 // Creation d'une nouvelle sauce dans la DB
 exports.createSauce =  (request, response, next) => {
-    delete request.body._id;
+    const sauceObject = JSON.parse(request.body.sauce);
+    delete sauceObject._id;
     const sauce = new Sauce({
 
-        ...request.body,
+        ...sauceObject,
+        imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`,
         likes: 0,
         dislikes : 0,
         usersLiked : [], 
@@ -30,8 +34,15 @@ exports.createSauce =  (request, response, next) => {
 
 // Modification d'une sauce de la DB
 exports.modifySauce = (request, response, next) => {
+    const sauceObject = request.file ?
+    {
 
-    Sauce.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id })
+        ...JSON.parse(request.body.sauce),
+        imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`
+
+
+     } : { ...request.body };
+    Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
     .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
     .catch( error => response.status(400).json({ error }));
 
@@ -39,10 +50,19 @@ exports.modifySauce = (request, response, next) => {
 
 // Suppression d'une sauce de la DB
 exports.deleteSauce =  (request, response, next) => {
+    
+    Sauce.findOne({ _id: request.params.id})
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+                Sauce.deleteOne({ _id: request.params.id})
+                .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
+                .catch(error => response.status(400).json({ error }));
+            });
+        })
+        .catch( error => response.status(500).json({ error }));
 
-    Sauce.deleteOne({ _id: request.params.id})
-        .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
-        .catch(error => response.status(400).json({ error }));
+
 
 };
 
