@@ -2,7 +2,6 @@
 /* ##########   MES DECLARATIONS   ################ */
 
 // importation package => express
-const { request } = require('express');
 const express = require('express');
 
 // application express

@@ -1,7 +1,6 @@
 
 /* ##########   MES DECLARATIONS   ################ */
 
-const { request } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -24,7 +23,6 @@ router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 router.get('/', auth, sauceCtrl.getAllSauce);
-
 
 /* ################################################ */
 
