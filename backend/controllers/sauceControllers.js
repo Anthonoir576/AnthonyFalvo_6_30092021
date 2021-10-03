@@ -34,6 +34,7 @@ exports.createSauce =  (request, response, next) => {
 
 // Modification d'une sauce de la DB
 exports.modifySauce = (request, response, next) => {
+
     const sauceObject = request.file ?
     {
 

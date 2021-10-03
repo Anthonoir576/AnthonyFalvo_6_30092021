@@ -1,6 +1,9 @@
 # OpenClassrooms Projet 06 
 ## Construisez une API sécurisée pour une application d'avis gastronomiques
 
+
+![screen Site](./readmepicture.png)
+
 ## Pour tester l'application
 1. Cloner le repository
     - Deux dossiers (backend / frontend)
