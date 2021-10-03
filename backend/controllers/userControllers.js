@@ -7,8 +7,9 @@ const bcrypt = require('bcrypt');
 // Importation de token et verification
 const jwt = require('jsonwebtoken');
 
-// importation modèle de SAUCE depuis le fichier js
+// Importation modèle de SAUCE depuis le fichier js
 const User = require('../models/User');
+
 
 /* ################################################ */
 
