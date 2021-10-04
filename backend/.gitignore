@@ -1,2 +1,4 @@
 /node_modules
-/images/*.jpg *.png *.jpeg
+/images/*.jpg
+/images/*.png
+/images/*.jpeg
