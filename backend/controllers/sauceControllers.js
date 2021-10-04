@@ -38,31 +38,55 @@ exports.createSauce =  (request, response, next) => {
 // aime ou pas les sauces
 exports.likeOrDislikeSauce = (request, response, next) => {
 
+    const like = request.body.like;
+    const userId = request.body.userId;
+    let userChoice;
+
     Sauce.findOne({ _id: request.params.id })
         .then( sauce => {
 
-            console.log(sauce.usersDisliked, sauce.usersLiked);
-            console.log(sauce.usersLiked[0]);
-            console.log(sauce.usersDisliked.length);
-            console.log(sauce.usersLiked.length);
+            const arrayLike = sauce.usersLiked;
+            const arrayDislike = sauce.usersDisliked;
+
+            // si user aime la sauce
+            if (like === 1 && !arrayLike.includes(userId)) {
+
+                arrayLike.push(userId);
+                sauce.likes++;
+                userChoice = 'L\'utilisateur aime la sauce';
             
-            for (let i = 0; i <= sauce.usersLiked.length && i <= sauce.usersDisliked.length; i++) {
+            // si user n'aime pas la sauce    
+            } else if (like === -1 && !arrayLike.includes(userId)) {
 
-                // user trouvé   
-                if (sauce.usersLiked[i] == request.body.userId || sauce.usersDisliked[i] == request.body.userId) { 
+                arrayDislike.push(userId);
+                sauce.dislikes++;
+                userChoice = 'L\'utilisateur n\'aime la sauce';
 
-                    return console.log('user trouvé');
+            // si user change sont like/dislike    
+            } else if (like === 0) {
 
-                // Pas encore de like dislike de cet user 
-                } else if ((sauce.usersLiked[i] >= sauce.usersliked.length-- && sauce.usersDisliked[i] >= sauce.usersDisliked.length--) || (sauce.usersLiked.length == 0 && sauce.usersDisliked.length == 0)) {
+                if (arrayLike.includes(userId)) {
 
-                    return console.log('Aucun user trouvé');
-    
+                    arrayLike.pull(userId);
+                    sauce.likes--;
+                    userChoice = 'L\'utilisateur a retirer la mention "j\'aime" sur la sauce';
+
+                } else if (arrayDislike.includes(userId)) {
+
+                    arrayDislike.pull(userId);
+                    sauce.dislikes--;
+                    userChoice = 'L\'utilisateur a retirer la mention "j\'aime pas" sur la sauce';
+
                 };
+
             };
 
+            sauce.save()
+                 .then(() => response.status(200).json({ message: userChoice }))
+                 .catch(error => response.status(500).json({ error }));
+
         })
-        .catch(error => response.status(404).json({message : error}));
+        .catch(error => response.status(401).json({message : error}));
 
 };
 
