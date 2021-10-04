@@ -43,18 +43,20 @@ exports.likeOrDislikeSauce = (request, response, next) => {
 
             console.log(sauce.usersDisliked, sauce.usersLiked);
             console.log(sauce.usersLiked[0]);
+            console.log(sauce.usersDisliked.length);
+            console.log(sauce.usersLiked.length);
             
-            for (let i = 0; i < sauce.usersLiked.length && i < sauce.usersDisLiked.length; i++) {
+            for (let i = 0; i <= sauce.usersLiked.length && i <= sauce.usersDisliked.length; i++) {
 
                 // user trouvé   
                 if (sauce.usersLiked[i] == request.body.userId || sauce.usersDisliked[i] == request.body.userId) { 
 
-                    console.log('user trouvé');
+                    return console.log('user trouvé');
 
                 // Pas encore de like dislike de cet user 
-                } else if (sauce.usersLiked[i] !== request.body.userId && sauce.usersDisliked[i] !== request.body.userId && (sauce.usersLiked[i] == sauce.usersliked.length-- && sauce.usersDisliked[i] == sauce.usersDisliked.length--)) {
+                } else if ((sauce.usersLiked[i] >= sauce.usersliked.length-- && sauce.usersDisliked[i] >= sauce.usersDisliked.length--) || (sauce.usersLiked.length == 0 && sauce.usersDisliked.length == 0)) {
 
-                    console.log('Aucun user trouvé');
+                    return console.log('Aucun user trouvé');
     
                 };
             };
