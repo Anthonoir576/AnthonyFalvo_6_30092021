@@ -6,9 +6,6 @@ const Sauce = require('../models/Sauce');
 
 const fs = require('fs');
 
-// Importation modèle de USER depuis le fichier js
-const User = require('../models/User')
-
 /* ################################################ */
 
 
@@ -35,7 +32,7 @@ exports.createSauce =  (request, response, next) => {
 
 };
 
-// aime ou pas les sauces
+// like ou dislike les sauces
 exports.likeOrDislikeSauce = (request, response, next) => {
 
     const like = request.body.like;
