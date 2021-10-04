@@ -6,6 +6,9 @@ const Sauce = require('../models/Sauce');
 
 const fs = require('fs');
 
+// Importation modèle de USER depuis le fichier js
+const User = require('../models/User')
+
 /* ################################################ */
 
 
@@ -29,6 +32,35 @@ exports.createSauce =  (request, response, next) => {
     sauce.save()
         .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
         .catch(error => response.status(400).json({ error }));
+
+};
+
+// aime ou pas les sauces
+exports.likeOrDislikeSauce = (request, response, next) => {
+
+    Sauce.findOne({ _id: request.params.id })
+        .then( sauce => {
+
+            console.log(sauce.usersDisliked, sauce.usersLiked);
+            console.log(sauce.usersLiked[0]);
+            
+            for (let i = 0; i < sauce.usersLiked.length && i < sauce.usersDisLiked.length; i++) {
+
+                // user trouvé   
+                if (sauce.usersLiked[i] == request.body.userId || sauce.usersDisliked[i] == request.body.userId) { 
+
+                    console.log('user trouvé');
+
+                // Pas encore de like dislike de cet user 
+                } else if (sauce.usersLiked[i] !== request.body.userId && sauce.usersDisliked[i] !== request.body.userId && (sauce.usersLiked[i] == sauce.usersliked.length-- && sauce.usersDisliked[i] == sauce.usersDisliked.length--)) {
+
+                    console.log('Aucun user trouvé');
+    
+                };
+            };
+
+        })
+        .catch(error => response.status(404).json({message : error}));
 
 };
 

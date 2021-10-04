@@ -19,6 +19,7 @@ const multer = require('../middleware/multer-config');
 
 // Route => logique route dans sauceControllers.js
 router.post('/', auth, multer, sauceCtrl.createSauce);
+router.post('/:id/like', auth, sauceCtrl.likeOrDislikeSauce);
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 router.delete('/:id', auth, sauceCtrl.deleteSauce);
 router.get('/:id', auth, sauceCtrl.getOneSauce);
