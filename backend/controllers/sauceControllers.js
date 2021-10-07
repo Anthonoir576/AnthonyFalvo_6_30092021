@@ -15,6 +15,18 @@ const fs = require('fs');
 exports.createSauce =  (request, response, next) => {
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
+
+    // OK ca fonctionne mettre en place la logique if else
+    let nom = sauceObject.name;
+    let manufacturer = sauceObject.manufacturer;
+    let description = sauceObject.description;
+    let mainPepper = sauceObject.mainPepper;
+    console.log(nom.trim().length);
+    console.log(manufacturer.trim());
+    console.log(description.trim());
+    console.log(mainPepper.trim());
+    // ##################################################
+
     const sauce = new Sauce({
 
         ...sauceObject,
