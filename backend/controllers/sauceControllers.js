@@ -16,31 +16,34 @@ exports.createSauce =  (request, response, next) => {
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
 
-    // OK ca fonctionne mettre en place la logique if else
+    // Condition de verification pour eviter quun user met que des espaces 
     let nom = sauceObject.name;
     let manufacturer = sauceObject.manufacturer;
     let description = sauceObject.description;
     let mainPepper = sauceObject.mainPepper;
-    console.log(nom.trim().length);
-    console.log(manufacturer.trim());
-    console.log(description.trim());
-    console.log(mainPepper.trim());
-    // ##################################################
 
-    const sauce = new Sauce({
+    if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
 
-        ...sauceObject,
-        imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`,
-        likes: 0,
-        dislikes : 0,
-        usersLiked : [], 
-        usersDisliked : [] 
+        const sauce = new Sauce({
 
-    });
+            ...sauceObject,
+            imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`,
+            likes: 0,
+            dislikes : 0,
+            usersLiked : [], 
+            usersDisliked : [] 
+    
+        });
+    
+        sauce.save()
+            .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
+            .catch(error => response.status(400).json({ error }));
 
-    sauce.save()
-        .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
-        .catch(error => response.status(400).json({ error }));
+    } else {
+
+        return () => {error => response.status(401).json({ error })};
+
+    }
 
 };
 
@@ -109,10 +112,28 @@ exports.modifySauce = (request, response, next) => {
         imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`
 
 
-     } : { ...request.body };
-    Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
-    .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
-    .catch( error => response.status(400).json({ error }));
+    } : { ...request.body };
+    
+    // Condition de verification pour eviter quun user met que des espaces 
+    const sauceObjectModifier = sauceObject;
+    
+    let nom = sauceObjectModifier.name;
+    let manufacturer = sauceObjectModifier.manufacturer;
+    let description = sauceObjectModifier.description;
+    let mainPepper = sauceObjectModifier.mainPepper;
+
+    if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
+
+        Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
+        .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
+        .catch( error => response.status(400).json({ error }));
+    
+
+    } else {
+
+        return () => {error => response.status(401).json({ error })};
+
+    }
 
 };
 
