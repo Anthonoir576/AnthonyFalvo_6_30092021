@@ -144,12 +144,7 @@ exports.modifySauce = (request, response, next) => {
                     .catch( error => response.status(400).json({ error }));
                 });
 
-            }
-
-            console.log(filename);
-            //console.log(sauceObject.imageUrl.split('/images/')[1] == filename);
-            //console.log(sauceObject.imageUrl.split('/images/')[1] == undefined);
-
+            };
 
         })
         .catch( error => response.status(500).json({ error }));
