@@ -127,13 +127,30 @@ exports.modifySauce = (request, response, next) => {
         Sauce.findOne({ _id: request.params.id})
         .then(sauce => {
             const filename = sauce.imageUrl.split('/images/')[1];
+
             // Suppression de la photo précédente une fois mise a jour
-            console.log(filename);
-            fs.unlink(`images/${filename}`, () => {
+            // si pas mise a jour, ne supprime pas. 
+            if (sauceObject.imageUrl == undefined) {
+
                 Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
                 .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
                 .catch( error => response.status(400).json({ error }));
-            });
+
+            } else {
+
+                fs.unlink(`images/${filename}`, () => {
+                    Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
+                    .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
+                    .catch( error => response.status(400).json({ error }));
+                });
+
+            }
+
+            console.log(filename);
+            //console.log(sauceObject.imageUrl.split('/images/')[1] == filename);
+            //console.log(sauceObject.imageUrl.split('/images/')[1] == undefined);
+
+
         })
         .catch( error => response.status(500).json({ error }));
 
