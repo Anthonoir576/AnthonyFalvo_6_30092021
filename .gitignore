@@ -1,2 +1,7 @@
 /node_modules
-/backend/images
+
+/backend/images/*.jpg
+/backend/images/*.jpeg
+/backend/images/*.png
+
+/piiquante.code-workspace
