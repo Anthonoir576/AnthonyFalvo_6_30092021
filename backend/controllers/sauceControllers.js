@@ -124,9 +124,19 @@ exports.modifySauce = (request, response, next) => {
 
     if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
 
-        Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
-        .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
-        .catch( error => response.status(400).json({ error }));
+        Sauce.findOne({ _id: request.params.id})
+        .then(sauce => {
+            const filename = sauce.imageUrl.split('/images/')[1];
+            // Suppression de la photo précédente une fois mise a jour
+            console.log(filename);
+            fs.unlink(`images/${filename}`, () => {
+                Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
+                .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
+                .catch( error => response.status(400).json({ error }));
+            });
+        })
+        .catch( error => response.status(500).json({ error }));
+
     
 
     } else {
