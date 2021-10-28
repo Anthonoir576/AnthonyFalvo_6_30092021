@@ -25,16 +25,11 @@ environnement.config();
 exports.signup = (request, response, next) => {
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
-    console.log(chiffrementMail);
-    const test = crypto.HmacSHA256(chiffrementMail, `${process.env.CRYPTO_KEY}`);
-    const mail = test.toString(crypto.enc.UTF-8);
-    console.log(mail);
-
-
+    
     bcrypt.hash(request.body.password, 10)
         .then(hash => {
             const user = new User({
-                email: request.body.email,
+                email: chiffrementMail,
                 password: hash
             });
             user.save()
@@ -47,7 +42,9 @@ exports.signup = (request, response, next) => {
 
 exports.login = (request, response, next) => {
 
-   User.findOne({email: request.body.email})
+    const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
+
+   User.findOne({email: chiffrementMail})
     .then(user => {
         if(!user) {
             return response.status(401).json({ error: 'Utilisateur non trouvé '});
