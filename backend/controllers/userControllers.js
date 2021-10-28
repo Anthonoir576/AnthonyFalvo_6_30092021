@@ -10,11 +10,26 @@ const jwt = require('jsonwebtoken');
 // Importation modèle de USER depuis le fichier js
 const User = require('../models/User');
 
+// Importation cryptos-JS
+const crypto = require('crypto-js');
+
+// Importation de la dépendance dotenv
+const environnement = require('dotenv');
+environnement.config();
 
 /* ################################################ */
 
+
+
 /* ############   CONTROLLERS   ################### */
 exports.signup = (request, response, next) => {
+
+    const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
+    console.log(chiffrementMail);
+    const test = crypto.HmacSHA256(chiffrementMail, `${process.env.CRYPTO_KEY}`);
+    const mail = test.toString(crypto.enc.UTF-8);
+    console.log(mail);
+
 
     bcrypt.hash(request.body.password, 10)
         .then(hash => {
@@ -46,7 +61,7 @@ exports.login = (request, response, next) => {
                     userId: user._id,
                     token: jwt.sign(
                         { userId: user._id},
-                        'KEY_TOKEN_SECRET',
+                        `${process.env.TOKEN_KEY}`,
                         { expiresIn: '24h'}
                     )
                 });
