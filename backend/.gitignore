@@ -1,5 +1,13 @@
-/node_modules
+#BACK-END
+/backend/node_modules
 
-images/*.jpg
-images/*.jpeg
-images/*.png
+/backend/images/*.jpg
+/backend/images/*.jpeg
+/backend/images/*.png
+
+/piiquante.code-workspace
+
+/backend/.env
+
+#FRONT-END
+/frontend/node_modules
