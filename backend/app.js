@@ -14,11 +14,15 @@ const mongoose = require('mongoose');
 const sauceRoutes = require('./routes/sauceRoute');
 // importation des routes concernant les users suivant les différentes requêtes
 const userRoutes = require('./routes/userRoute');
-
+// PATH IMAGE
 const path = require('path');
 
+// Importation de la dépendance dotenv
+const environnement = require('dotenv');
+environnement.config();
+
 // Connection a la DB mongoDB Atlas
-mongoose.connect('mongodb+srv://Anthonoir576:475719711993@projet-06-openclassroom.bum0m.mongodb.net/Projet-06-Openclassrooms?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@projet-06-openclassroom.bum0m.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
