@@ -17,15 +17,14 @@ exports.createSauce =  (request, response, next) => {
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
 
-    // Condition de verification pour eviter quun user met que des espaces 
+    
     let nom = sauceObject.name;
     let manufacturer = sauceObject.manufacturer;
     let description = sauceObject.description;
     let mainPepper = sauceObject.mainPepper;
 
-
+    // Condition de verification pour eviter quun user met que des espaces 
     if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
-
 
             const sauce = new Sauce({
 
@@ -44,7 +43,13 @@ exports.createSauce =  (request, response, next) => {
 
     } else {
 
-        console.log(' non ajouté ');
+        // Suppression img si condition pas respecter
+        const filename = request.file.filename;
+
+        fs.unlink(`images/${filename}`,(err) => {
+            if (err) throw err;
+            console.log('Fichier supprimé !');
+         });
 
     };
 
