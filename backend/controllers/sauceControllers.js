@@ -11,6 +11,7 @@ const fs = require('fs');
 
 
 /* ############   CONTROLLERS   ################### */
+
 // Creation d'une nouvelle sauce dans la DB
 exports.createSauce =  (request, response, next) => {
     const sauceObject = JSON.parse(request.body.sauce);
@@ -22,9 +23,11 @@ exports.createSauce =  (request, response, next) => {
     let description = sauceObject.description;
     let mainPepper = sauceObject.mainPepper;
 
+
     if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
 
-        const sauce = new Sauce({
+
+            const sauce = new Sauce({
 
             ...sauceObject,
             imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`,
@@ -34,16 +37,16 @@ exports.createSauce =  (request, response, next) => {
             usersDisliked : [] 
     
         });
-    
+
         sauce.save()
             .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
             .catch(error => response.status(400).json({ error }));
 
     } else {
 
-        return () => {error => response.status(401).json({ error })};
+        console.log(' non ajouté ');
 
-    }
+    };
 
 };
 
@@ -114,7 +117,7 @@ exports.modifySauce = (request, response, next) => {
 
     } : { ...request.body };
     
-    // Condition de verification pour eviter quun user met que des espaces 
+    
     const sauceObjectModifier = sauceObject;
     
     let nom = sauceObjectModifier.name;
@@ -122,6 +125,8 @@ exports.modifySauce = (request, response, next) => {
     let description = sauceObjectModifier.description;
     let mainPepper = sauceObjectModifier.mainPepper;
 
+
+    // Condition de verification pour eviter quun user met que des espaces 
     if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
 
         Sauce.findOne({ _id: request.params.id})
@@ -150,10 +155,12 @@ exports.modifySauce = (request, response, next) => {
         .catch( error => response.status(500).json({ error }));
 
     
-
+    // si il met des espaces, et que le if n'est pas pas rempli, alors retour a la valeur d'origine déjà renseigner     
     } else {
 
-        return () => {error => response.status(401).json({ error })};
+        Sauce.findOne({ _id: request.params.id })
+        .then(sauce => response.status(200).json(sauce))
+        .catch(error => response.status(404).json({ error }));
 
     }
 
