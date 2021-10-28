@@ -2,7 +2,7 @@
 ## Construisez une API sécurisée pour une application d'avis gastronomiques
 
 
-![screen Site](./readmepicture.png)
+![screen Site](./readme.png)
 
 ## Pour tester l'application
 1. Cloner le repository
