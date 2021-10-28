@@ -10,7 +10,7 @@
 2. backend :
     - Dans le terminal accéder au dossier du projet backend
     - npm install (Pour les modules nodes)
-    - lancer : "nodemon server" ou "node server" et ou "npm start" (il est configuré) ;
+    - lancer : "nodemon server","node server" ou "npm start";
 3. Adresse de l'API : http://localhost:3000 par defaut
 4. frontend : 
     - Dans le terminal accéder au dossier du projet frontend
