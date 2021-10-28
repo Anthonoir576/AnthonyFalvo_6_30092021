@@ -3,11 +3,14 @@
 const express = require('express');
 const router = express.Router();
 
+// Controle password
+const password = require('../middleware/password');
+
 // Importation des controllers USER => logique de routing
 const userCtrl = require('../controllers/userControllers');
 /* ################################################ */
 
-router.post('/signup', userCtrl.signup);
+router.post('/signup', password, userCtrl.signup);
 router.post('/login', userCtrl.login);
 
 /* ##############    EXPORT     ################### */
