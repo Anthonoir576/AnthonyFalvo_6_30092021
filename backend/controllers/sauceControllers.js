@@ -14,17 +14,20 @@ const fs = require('fs');
 
 // Creation d'une nouvelle sauce dans la DB
 exports.createSauce =  (request, response, next) => {
+
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
-
-    
+ 
     let nom = sauceObject.name;
     let manufacturer = sauceObject.manufacturer;
     let description = sauceObject.description;
     let mainPepper = sauceObject.mainPepper;
 
     // Condition de verification pour eviter quun user met que des espaces 
-    if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
+    if (nom.trim().length >= 3 &&
+        manufacturer.trim().length >= 3 &&
+        description.trim().length >= 3 &&
+        mainPepper.trim().length >= 3) {
 
             const sauce = new Sauce({
 
@@ -43,13 +46,31 @@ exports.createSauce =  (request, response, next) => {
 
     } else {
 
-        // Suppression img si condition pas respecter
-        const filename = request.file.filename;
+        try {
 
-        fs.unlink(`images/${filename}`,(err) => {
-            if (err) throw err;
-            console.log('Fichier supprimé !');
-         });
+            // Suppression img si condition pas respecter
+            const filename = request.file.filename;
+
+            fs.unlink(`images/${filename}`,(error) => {
+
+                if (error) { 
+                    
+                    throw error
+                    
+                };
+
+                console.log('Fichier supprimé !');
+            });
+
+            throw 'Requête non autorisée !';
+
+
+        } catch (error) {
+
+            response.status(401).json({ error: error | 'Requête non autorisée !'});
+
+        };
+
 
     };
 
@@ -132,7 +153,10 @@ exports.modifySauce = (request, response, next) => {
 
 
     // Condition de verification pour eviter quun user met que des espaces 
-    if (nom.trim().length >= 3 && manufacturer.trim().length >= 3 && description.trim().length >= 3 && mainPepper.trim().length >= 3) {
+    if (nom.trim().length >= 3 &&
+        manufacturer.trim().length >= 3 &&
+        description.trim().length >= 3 && 
+        mainPepper.trim().length >= 3) {
 
         Sauce.findOne({ _id: request.params.id})
         .then(sauce => {
