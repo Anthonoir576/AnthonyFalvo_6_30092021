@@ -10,8 +10,17 @@ const password = require('../middleware/password');
 const userCtrl = require('../controllers/userControllers');
 /* ################################################ */
 
+
+
+/* ############   CONTROLLERS   ################### */
+
 router.post('/signup', password, userCtrl.signup);
 router.post('/login', userCtrl.login);
+
+/* ################################################ */
+
+
+
 
 /* ##############    EXPORT     ################### */
 module.exports = router;

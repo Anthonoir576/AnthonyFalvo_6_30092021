@@ -22,6 +22,7 @@ environnement.config();
 
 
 /* ############   CONTROLLERS   ################### */
+
 exports.signup = (request, response, next) => {
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
@@ -44,7 +45,7 @@ exports.login = (request, response, next) => {
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
 
-   User.findOne({email: chiffrementMail})
+    User.findOne({email: chiffrementMail})
     .then(user => {
         if(!user) {
             return response.status(401).json({ error: 'Utilisateur non trouvé '});
@@ -68,4 +69,5 @@ exports.login = (request, response, next) => {
     .catch(error => response.status(500).json({ error })); 
 
 };
+
 /* ################################################ */
