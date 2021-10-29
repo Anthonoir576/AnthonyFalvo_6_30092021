@@ -16,6 +16,12 @@ const passwordSchema = new passwordValidator();
 passwordSchema
 .is().min(4)
 .is().max(20)
+// .has().uppercase()                              
+// .has().lowercase()                             
+// .has().digits(2)                               
+// .has().not().spaces()                           
+// .is().not().oneOf(['Passw0rd', 'Password123']); 
+
 
 /* ################################################ */
 
