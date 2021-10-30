@@ -196,7 +196,7 @@ exports.modifySauce = (request, response, next) => {
             // SINON ERREUR
             } else if (userId !== sauce.userId) {
 
-                return response.status(401).json({ message : ' Tentative de modification non autorisé !'});
+                return response.status(403).json({ message : 'unauthorized request'});
 
             };
 
@@ -239,7 +239,7 @@ exports.deleteSauce =  (request, response, next) => {
             // SINON ERREUR
             } else if (userId !== sauce.userId) {
 
-                return response.status(401).json({ message : ' Tentative de suppression non autorisé !'});
+                return response.status(403).json({ message : 'unauthorized request'});
 
             };
         
