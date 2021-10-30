@@ -7,6 +7,8 @@ const express = require('express');
 // application express
 const app = express();
 
+const helmet = require('helmet');
+
 // importation package => mongoose
 const mongoose = require('mongoose');
 
@@ -31,7 +33,6 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
 /* ################################################ */
 
 
-
 /* ##############    CORS   ####################### */
 
 // Permet notamment d'eviter les requêtes indésirables
@@ -48,6 +49,14 @@ app.use((request, response, next) => {
     next();
 
 });
+
+/* ################################################ */
+
+
+
+/* ###########   HELMET SECURE   ################## */
+
+app.use(helmet());
 
 /* ################################################ */
 

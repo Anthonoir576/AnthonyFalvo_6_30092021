@@ -13,7 +13,7 @@ environnement.config();
 
 /* ################################################ */
 
-
+ 
 
 
 
@@ -26,6 +26,10 @@ app.set('port', process.env.PORT || 3000);
 const server = http.createServer(app);
 
 // SERVEUR
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3000, () => {
+
+    console.log(`Le serveur fonctionne sur le port ${process.env.PORT}`);
+
+});
 
 /* ################################################ */
