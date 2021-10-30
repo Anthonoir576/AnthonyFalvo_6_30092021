@@ -9,7 +9,7 @@
     - Deux dossiers (backend / frontend)
 2. backend :
     - Dans le terminal accéder au dossier du projet backend
-    - Un exemple de variable d'environnement est fournis avec un accès restreint à la bdd, tous les renseignements sont déjà renseigné.
+    - Un exemple de variable d'environnement est fournis avec un accès restreint à la bdd, tous les renseignements sont déjà renseigné, il suffit simplement de supprimer (.example de => .env.example).
     - npm install (Pour les modules nodes)
     - lancer : "nodemon server","node server" ou "npm start";
 3. Adresse de l'API : http://localhost:3000 par defaut
