@@ -4,7 +4,11 @@
 // importation modèle de SAUCE depuis le fichier js
 const Sauce = require('../models/Sauce');
 
+// File system 
 const fs = require('fs');
+
+// Importantion jwt token
+const jwt = require('jsonwebtoken');
 
 /* ################################################ */
 
@@ -152,6 +156,11 @@ exports.modifySauce = (request, response, next) => {
     let mainPepper = sauceObjectModifier.mainPepper;
 
 
+    const token = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
+
+    
     // Condition de verification pour eviter quun user met que des espaces 
     if (nom.trim().length >= 3 &&
         manufacturer.trim().length >= 3 &&
@@ -160,23 +169,34 @@ exports.modifySauce = (request, response, next) => {
 
         Sauce.findOne({ _id: request.params.id})
         .then(sauce => {
+
             const filename = sauce.imageUrl.split('/images/')[1];
 
-            // Suppression de la photo précédente une fois mise a jour
-            // si pas mise a jour, ne supprime pas. 
-            if (sauceObject.imageUrl == undefined) {
+            // VERIFICATION Si user.id correspond au createur de la sauce
+            if (userId == sauce.userId) {
 
-                Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
-                .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
-                .catch( error => response.status(400).json({ error }));
+                // Si aucune photo => update 
+                if (sauceObject.imageUrl == undefined) {
 
-            } else {
-
-                fs.unlink(`images/${filename}`, () => {
                     Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
                     .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
                     .catch( error => response.status(400).json({ error }));
-                });
+
+                // Suppression de la photo précédente avant => update    
+                } else {
+
+                    fs.unlink(`images/${filename}`, () => {
+                        Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
+                        .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
+                        .catch( error => response.status(400).json({ error }));
+                    });
+
+                };
+            
+            // SINON ERREUR
+            } else if (userId !== sauce.userId) {
+
+                return response.status(401).json({ message : ' Tentative de modification non autorisé !'});
 
             };
 
@@ -191,21 +211,38 @@ exports.modifySauce = (request, response, next) => {
         .then(sauce => response.status(200).json(sauce))
         .catch(error => response.status(404).json({ error }));
 
-    }
+    };
 
 };
 
 // Suppression d'une sauce de la DB
 exports.deleteSauce =  (request, response, next) => {
+
+    const token = request.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
+    const userId = decodedToken.userId;
     
     Sauce.findOne({ _id: request.params.id})
         .then(sauce => {
-            const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                Sauce.deleteOne({ _id: request.params.id})
-                .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
-                .catch(error => response.status(400).json({ error }));
-            });
+
+            // VERIFICATION Si user.id correspond au createur de la sauce
+            if (userId == sauce.userId) {
+
+                const filename = sauce.imageUrl.split('/images/')[1];
+
+                fs.unlink(`images/${filename}`, () => {
+                    Sauce.deleteOne({ _id: request.params.id})
+                    .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
+                    .catch(error => response.status(400).json({ error }));
+                });
+            
+            // SINON ERREUR
+            } else if (userId !== sauce.userId) {
+
+                return response.status(401).json({ message : ' Tentative de suppression non autorisé !'});
+
+            };
+        
         })
         .catch( error => response.status(500).json({ error }));
 
