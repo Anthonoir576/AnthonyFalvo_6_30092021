@@ -1,6 +1,13 @@
 
 /* ##########   MES DECLARATIONS   ################ */
 
+/** JS DOCUMENTATION 
+ * 
+ * 
+ * 
+ * 
+ */
+
 // importation package => express
 const express = require('express');
 
