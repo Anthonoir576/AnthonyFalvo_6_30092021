@@ -20,21 +20,19 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
+const bcrypt        = require('bcrypt');            // 01.
+const jwt           = require('jsonwebtoken');      // 02.
+const User          = require('../models/User');    // 03.
+const crypto        = require('crypto-js');         // 04.
 
-const bcrypt = require('bcrypt');                   // 01. Import bcrypt
-
-const jwt = require('jsonwebtoken');                // 02. Import JWT 
-const User = require('../models/User');             // 03. Import modèle USER
-const crypto = require('crypto-js');                // 04. Import cryptos-JS
-
-const environnement = require('dotenv');            // 05. Import .env
+const environnement = require('dotenv');            // 05.
 environnement.config();
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-exports.signup = (request, response, next) => {      // 06. S'ENREGISTRER   
+exports.signup = (request, response, next) => {      // 06.
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
     
@@ -51,8 +49,7 @@ exports.signup = (request, response, next) => {      // 06. S'ENREGISTRER
         .catch(error => response.status(500).json({ error }));
 
 };
-
-exports.login = (request, response, next) => {       // 07. SE CONNECTER   
+exports.login  = (request, response, next) => {      // 07.
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
 

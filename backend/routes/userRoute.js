@@ -18,17 +18,16 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express = require('express');                         // 01. Import Express
-const router  = express.Router();                           // 02. Router CONFIG
-
-const password = require('../middleware/password');         // 03. Import password     
-const userCtrl = require('../controllers/userControllers'); // 04. Import userCtrl
+const express  = require('express');                        // 01.
+const router   = express.Router();                          // 02.
+const password = require('../middleware/password');         // 03.    
+const userCtrl = require('../controllers/userControllers'); // 04.
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-                                                            // 05. Route USER
+                                                            // 05.
 router.post('/signup', password, userCtrl.signup);
 router.post('/login', userCtrl.login);
 /* ################################################ */
@@ -37,5 +36,5 @@ router.post('/login', userCtrl.login);
 
 
 /* ##############    EXPORT     ################### */
-module.exports = router;                                    // 06. EXPORT
+module.exports = router;                                    // 06.
 /* ################################################ */

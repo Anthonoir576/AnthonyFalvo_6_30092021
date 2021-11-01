@@ -12,13 +12,13 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const password = require('password-validator');     // 01. Import contrôle MDP
+const password = require('password-validator');     // 01.
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const passwordSchema = new password();              // 02. Schema password
+const passwordSchema = new password();              // 02.
 
 passwordSchema
 .is().min(4)
@@ -28,13 +28,12 @@ passwordSchema
 // .has().digits(2)                               
 // .has().not().spaces()                           
 // .is().not().oneOf(['Passw0rd', 'Password123', '0000', '1234', 'motdepasse', 'MotDePasse', 'motdepasse123', 'MotDePasse123']); 
-
 /* ################################################ */
 
 
 
 /* ##############    EXPORT     ################### */
-module.exports = (request, response, next) => {     // 03. EXPORT schema         
+module.exports = (request, response, next) => {     // 03.
 
     if(passwordSchema.validate(request.body.password)) {
 
@@ -45,7 +44,5 @@ module.exports = (request, response, next) => {     // 03. EXPORT schema
         return response.status(40).json({ error: " Le mot de passe doit contenir au minimum 4 caractères, et au maximum 20 caractères"});
 
     };
-
-
 };
 /* ################################################ */

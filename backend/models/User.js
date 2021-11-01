@@ -16,25 +16,25 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const mongoose   = require('mongoose');                  // 01. Import mongoose
-const uniqueMail = require('mongoose-unique-validator'); // 02. Import unique mail
+const mongoose   = require('mongoose');                  // 01.
+const uniqueMail = require('mongoose-unique-validator'); // 02.
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const userSchema = mongoose.Schema({                     // 03. Schema USER     
+const userSchema = mongoose.Schema({                     // 03.
 
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true }
 
 });
 
-userSchema.plugin(uniqueMail);                           // 04. EMAIL unique
+userSchema.plugin(uniqueMail);                           // 04.
 /* ################################################ */
 
 
 
 /* ##############    EXPORT     ################### */
-module.exports = mongoose.model('User', userSchema);    // 05. EXPORT
+module.exports = mongoose.model('User', userSchema);     // 05.
 /* ################################################ */

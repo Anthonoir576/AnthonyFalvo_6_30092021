@@ -48,32 +48,33 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express = require('express');                  // 01. Import Express
-const app     = express();                           // 02. Appli  Express
+const express       = require('express');             // 01.
+const app           = express();                      // 02.
+const helmet        = require('helmet');              // 03.
+const mongoose      = require('mongoose');            // 04.
+const sauceRoutes   = require('./routes/sauceRoute'); // 05.
+const userRoutes    = require('./routes/userRoute');  // 06.
+const path          = require('path');                // 07.
 
-const helmet   = require('helmet');                  // 03. Import helmet
-const mongoose = require('mongoose');                // 04. Import Mongoose
-
-const sauceRoutes = require('./routes/sauceRoute');  // 05. import routes SAUCE
-const userRoutes  = require('./routes/userRoute');   // 06. import routes USER
-
-const path = require('path');                        // 07. PATH IMAGE
-
-const environnement = require('dotenv');             // 08. Import .env
+const environnement = require('dotenv');              // 08.
 environnement.config();
+/* ################################################ */
 
-                                                     // 09. Connection DB 
+
+
+/* #############  CONNECTION DB   ################# */
+                                                      // 09. 
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_GROUP}.bum0m.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+{ useNewUrlParser: true,
+  useUnifiedTopology: true })
+.then(() => console.log('Connexion à MongoDB réussie !'))
+.catch(() => console.log('Connexion à MongoDB échouée !'));
 /* ################################################ */
 
 
 
 /* ##############    CORS   ####################### */
-app.use((request, response, next) => {              // 10. CORS Config        
+app.use((request, response, next) => {                // 10.
 
     // autorisation à '*' donc tout le monde :
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -90,27 +91,27 @@ app.use((request, response, next) => {              // 10. CORS Config
 
 
 /* ###########   HELMET SECURE   ################## */
-app.use(helmet());                                  // 11. Protection header
+app.use(helmet());                                    // 11.
 /* ################################################ */
 
 
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
-app.use(express.json());                            // 12. JSON body request    
+app.use(express.json());                              // 12.   
 /* ################################################ */
 
 
 
 /* #############   MIDDLEWARE   ################### */
 app.use('/images',
-express.static(path.join(__dirname, 'images')));    // 13.
+express.static(path.join(__dirname, 'images')));      // 13.
                                                  
-app.use('/api/sauces', sauceRoutes);                // 14. Route SAUCE  
-app.use('/api/auth', userRoutes);                   // 15. Route USER
+app.use('/api/sauces', sauceRoutes);                  // 14. 
+app.use('/api/auth', userRoutes);                     // 15.
 /* ################################################ */
 
 
 
-/* ##############    EXPORT     ################### */                                        
-module.exports = app;                               // 16. EXPORT app.js
+/* ##############    EXPORT     ################### */
+module.exports = app;                                 // 16.
 /* ################################################ */
