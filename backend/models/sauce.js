@@ -1,12 +1,24 @@
 
+/** ---- JS DOCUMENTATION SAUCE.JS ----
+ * 
+ * 01. 
+ * 
+ * 02.  
+ * 
+ * 03.
+ * 
+ */
+
+
+
 /* ##########   MES DECLARATIONS   ################ */
-const mongoose = require('mongoose');               // 01. importation package => mongoose
+const mongoose = require('mongoose');                // 01. Import mongoose
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const sauceSchema = mongoose.Schema({               // 02. Schema SAUCE   
+const sauceSchema = mongoose.Schema({                // 02. Schema SAUCE   
 
     userId: { type: String, required: true },
     name: { type: String, required: true }, 
@@ -26,6 +38,5 @@ const sauceSchema = mongoose.Schema({               // 02. Schema SAUCE
 
 
 /* ##############    EXPORT     ################### */
-                                                    // 03. EXPORT
-module.exports = mongoose.model('Sauce', sauceSchema);
+module.exports = mongoose.model('Sauce', sauceSchema); // 03. EXPORT
 /* ################################################ */

@@ -12,13 +12,13 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const password = require('password-validator');     // 01. Dépendance contrôle MDP
+const password = require('password-validator');     // 01. Import contrôle MDP
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const passwordSchema = new password();              // 02. Schema contrôle password
+const passwordSchema = new password();              // 02. Schema password
 
 passwordSchema
 .is().min(4)
@@ -34,7 +34,7 @@ passwordSchema
 
 
 /* ##############    EXPORT     ################### */
-module.exports = (request, response, next) => {     // 03. Export schema         
+module.exports = (request, response, next) => {     // 03. EXPORT schema         
 
     if(passwordSchema.validate(request.body.password)) {
 

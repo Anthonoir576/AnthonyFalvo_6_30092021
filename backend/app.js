@@ -48,18 +48,18 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express = require('express');                  // 01. Importation Express
-const app     = express();                           // 02. Application express
+const express = require('express');                  // 01. Import Express
+const app     = express();                           // 02. Appli  Express
 
-const helmet   = require('helmet');                  // 03. Importation helmet
-const mongoose = require('mongoose');                // 04. Importation Mongoose
+const helmet   = require('helmet');                  // 03. Import helmet
+const mongoose = require('mongoose');                // 04. Import Mongoose
 
-const sauceRoutes = require('./routes/sauceRoute');  // 05. importation routes SAUCE
-const userRoutes  = require('./routes/userRoute');   // 06. importation routes UTILISATEUR
+const sauceRoutes = require('./routes/sauceRoute');  // 05. import routes SAUCE
+const userRoutes  = require('./routes/userRoute');   // 06. import routes USER
 
 const path = require('path');                        // 07. PATH IMAGE
 
-const environnement = require('dotenv');             // 08. Importation variable d'environnement
+const environnement = require('dotenv');             // 08. Import .env
 environnement.config();
 
                                                      // 09. Connection DB 
@@ -90,13 +90,13 @@ app.use((request, response, next) => {              // 10. CORS Config
 
 
 /* ###########   HELMET SECURE   ################## */
-app.use(helmet());                                  // 11. Protection header 'Helmet'
+app.use(helmet());                                  // 11. Protection header
 /* ################################################ */
 
 
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
-app.use(express.json());                            // 12. Convertion JSON corp de la requête   
+app.use(express.json());                            // 12. JSON body request    
 /* ################################################ */
 
 
@@ -105,12 +105,12 @@ app.use(express.json());                            // 12. Convertion JSON corp 
 app.use('/images',
 express.static(path.join(__dirname, 'images')));    // 13.
                                                  
-app.use('/api/sauces', sauceRoutes);                // 14. Route Sauce                                            
-app.use('/api/auth', userRoutes);                   // 15. Route Utilisateur
+app.use('/api/sauces', sauceRoutes);                // 14. Route SAUCE  
+app.use('/api/auth', userRoutes);                   // 15. Route USER
 /* ################################################ */
 
 
 
 /* ##############    EXPORT     ################### */                                        
-module.exports = app;                               // 16. Exportation app
+module.exports = app;                               // 16. EXPORT app.js
 /* ################################################ */

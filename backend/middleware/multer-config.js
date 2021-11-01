@@ -1,7 +1,21 @@
 
+/** ---- JS DOCUMENTATION MULTER-CONFIG.JS ----
+ * 
+ * 01. 
+ * 
+ * 02.  
+ * 
+ * 03.
+ * 
+ * 04.
+ * 
+ */
+
+
+
 /* ##########   MES DECLARATIONS   ################ */
-const multer     = require('multer');               // 01.
-const MIME_TYPES = {                                // 02. 
+const multer     = require('multer');               // 01. Import multer
+const MIME_TYPES = {                                // 02. JSON Objet
 
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
@@ -13,7 +27,7 @@ const MIME_TYPES = {                                // 02.
 
 
 /* ##############   MIDDLEWARE   ################## */
-const storage = multer.diskStorage({                // 03.
+const storage = multer.diskStorage({                // 03. Multer config
 
     destination: (request, file, callback) => {
         callback(null, 'images');
@@ -30,6 +44,6 @@ const storage = multer.diskStorage({                // 03.
 
 
 /* ##############   EXPORT   ###################### */
-                                                    // 04.
+                                                    // 04. EXPORT
 module.exports = multer({storage: storage}).single('image');
 /* ################################################ */

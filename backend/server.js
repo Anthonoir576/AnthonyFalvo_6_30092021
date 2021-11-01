@@ -19,20 +19,20 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const http = require('http');                        // 01. Importation package http
-const app  = require('./app');                       // 02. Importation app.js
+const http = require('http');                        // 01. Import package http
+const app  = require('./app');                       // 02. Import app.js
 
-const environnement = require('dotenv');             // 03. Importation Variable d'environnement 
+const environnement = require('dotenv');             // 03. Import .env 
 environnement.config();
 /* ################################################ */
 
  
 
 /* ################  SERVEUR  ##################### */
-app.set('port', process.env.PORT || 3000);          // 04. Sur quel port Express doit tourner
+app.set('port', process.env.PORT || 3000);          // 04. PORT Express
 
 const server = http.createServer(app);              // 05. Création serveur
-server.listen(process.env.PORT || 3000, () => {     // 06. Écoute serveur   
+server.listen(process.env.PORT || 3000, () => {     // 06. Écoute   serveur   
 
     console.log(`Le serveur fonctionne sur le port ${process.env.PORT}`);
 

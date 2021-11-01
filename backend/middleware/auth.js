@@ -12,9 +12,9 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const jwt = require('jsonwebtoken');                // 01. Importantion jwt token
+const jwt = require('jsonwebtoken');                // 01. Import JWT
 
-const environnement = require('dotenv')             // 02. Importation de la dépendance dotenv
+const environnement = require('dotenv')             // 02. Import .env
 environnement.config();
 /* ################################################ */
 

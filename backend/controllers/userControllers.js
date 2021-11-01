@@ -1,22 +1,40 @@
 
+/** ---- JS DOCUMENTATION USERCONTROLLERS.JS ----
+ * 
+ * 01. 
+ * 
+ * 02.  
+ * 
+ * 03.
+ * 
+ * 04.
+ * 
+ * 05.
+ * 
+ * 06.
+ * 
+ * 07.
+ * 
+ */
+
+
+
 /* ##########   MES DECLARATIONS   ################ */
 
-// package de hachage de mdp
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');                   // 01. Import bcrypt
 
-// Importation de token et verification
-const jwt = require('jsonwebtoken');                // 01. TOKEN
-const User = require('../models/User');             // 02. Importation modèle de USER
-const crypto = require('crypto-js');                // 03. Importation cryptos-JS
+const jwt = require('jsonwebtoken');                // 02. Import JWT 
+const User = require('../models/User');             // 03. Import modèle USER
+const crypto = require('crypto-js');                // 04. Import cryptos-JS
 
-const environnement = require('dotenv');            // 04. Importation de la dépendance dotenv
+const environnement = require('dotenv');            // 05. Import .env
 environnement.config();
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-exports.signup = (request, response, next) => {      // 05. S'ENREGISTRER   
+exports.signup = (request, response, next) => {      // 06. S'ENREGISTRER   
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
     
@@ -34,7 +52,7 @@ exports.signup = (request, response, next) => {      // 05. S'ENREGISTRER
 
 };
 
-exports.login = (request, response, next) => {       // 06. SE CONNECTER   
+exports.login = (request, response, next) => {       // 07. SE CONNECTER   
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
 

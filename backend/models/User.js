@@ -1,6 +1,23 @@
+
+/** ---- JS DOCUMENTATION USER.JS ----
+ * 
+ * 01. 
+ * 
+ * 02.  
+ * 
+ * 03.
+ * 
+ * 04.
+ * 
+ * 05.
+ * 
+ */
+
+
+
 /* ##########   MES DECLARATIONS   ################ */
-const mongoose   = require('mongoose');                  // 01. Importation mongoose
-const uniqueMail = require('mongoose-unique-validator'); // 02. dependance unique-validator
+const mongoose   = require('mongoose');                  // 01. Import mongoose
+const uniqueMail = require('mongoose-unique-validator'); // 02. Import unique mail
 /* ################################################ */
 
 
@@ -13,7 +30,7 @@ const userSchema = mongoose.Schema({                     // 03. Schema USER
 
 });
 
-userSchema.plugin(uniqueMail);                           // 04. Controle EMAIL unique
+userSchema.plugin(uniqueMail);                           // 04. EMAIL unique
 /* ################################################ */
 
 
