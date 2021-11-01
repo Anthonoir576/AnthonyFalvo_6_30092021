@@ -12,13 +12,13 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const password = require('password-validator');     // 01.
+const password = require('password-validator');     // - 01 -
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const passwordSchema = new password();              // 02.
+const passwordSchema = new password();              // - 02 -
 
 passwordSchema
 .is().min(4)
@@ -33,7 +33,7 @@ passwordSchema
 
 
 /* ##############    EXPORT     ################### */
-module.exports = (request, response, next) => {     // 03.
+module.exports = (request, response, next) => {     // - 03 -
 
     if(passwordSchema.validate(request.body.password)) {
 

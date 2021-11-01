@@ -48,22 +48,22 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const express       = require('express');             // 01.
-const app           = express();                      // 02.
-const helmet        = require('helmet');              // 03.
-const mongoose      = require('mongoose');            // 04.
-const sauceRoutes   = require('./routes/sauceRoute'); // 05.
-const userRoutes    = require('./routes/userRoute');  // 06.
-const path          = require('path');                // 07.
+const express       = require('express');             // - 01 -
+const app           = express();                      // - 02 -
+const helmet        = require('helmet');              // - 03 -
+const mongoose      = require('mongoose');            // - 04 -
+const sauceRoutes   = require('./routes/sauceRoute'); // - 05 -
+const userRoutes    = require('./routes/userRoute');  // - 06 -
+const path          = require('path');                // - 07 -
 
-const environnement = require('dotenv');              // 08.
+const environnement = require('dotenv');              // - 08 -
 environnement.config();
 /* ################################################ */
 
 
 
 /* #############  CONNECTION DB   ################# */
-                                                      // 09. 
+                                                      // - 09 - 
 mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_GROUP}.bum0m.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
@@ -74,7 +74,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS
 
 
 /* ##############    CORS   ####################### */
-app.use((request, response, next) => {                // 10.
+app.use((request, response, next) => {                // - 10 -
 
     // autorisation à '*' donc tout le monde :
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -91,27 +91,27 @@ app.use((request, response, next) => {                // 10.
 
 
 /* ###########   HELMET SECURE   ################## */
-app.use(helmet());                                    // 11.
+app.use(helmet());                                    // - 11 -
 /* ################################################ */
 
 
 
 /* #####  CONVERTION DU CORP DE LA REQUETE   ###### */                  
-app.use(express.json());                              // 12.   
+app.use(express.json());                              // - 12 -   
 /* ################################################ */
 
 
 
 /* #############   MIDDLEWARE   ################### */
 app.use('/images',
-express.static(path.join(__dirname, 'images')));      // 13.
+express.static(path.join(__dirname, 'images')));      // - 13 -
                                                  
-app.use('/api/sauces', sauceRoutes);                  // 14. 
-app.use('/api/auth', userRoutes);                     // 15.
+app.use('/api/sauces', sauceRoutes);                  // - 14 - 
+app.use('/api/auth', userRoutes);                     // - 15 -
 /* ################################################ */
 
 
 
 /* ##############    EXPORT     ################### */
-module.exports = app;                                 // 16.
+module.exports = app;                                 // - 16 -
 /* ################################################ */

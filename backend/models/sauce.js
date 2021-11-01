@@ -12,13 +12,13 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const mongoose = require('mongoose');                // 01.
+const mongoose = require('mongoose');                  // - 01 -
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const sauceSchema = mongoose.Schema({                // 02.  
+const sauceSchema = mongoose.Schema({                  // - 02 -  
 
     userId: { type: String, required: true },
     name: { type: String, required: true }, 
@@ -38,5 +38,5 @@ const sauceSchema = mongoose.Schema({                // 02.
 
 
 /* ##############    EXPORT     ################### */
-module.exports = mongoose.model('Sauce', sauceSchema); // 03.
+module.exports = mongoose.model('Sauce', sauceSchema); // - 03 -
 /* ################################################ */

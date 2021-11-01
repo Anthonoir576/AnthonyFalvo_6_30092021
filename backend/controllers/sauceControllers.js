@@ -24,15 +24,15 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const Sauce = require('../models/Sauce');                     // 01.
-const fs    = require('fs');                                  // 02.
-const jwt   = require('jsonwebtoken');                        // 03.
+const Sauce = require('../models/Sauce');                     // - 01 -
+const fs    = require('fs');                                  // - 02 -
+const jwt   = require('jsonwebtoken');                        // - 03 -
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-exports.createSauce        =  (request, response, next) => {  // 04.
+exports.createSauce        = (request, response, next) => {   // - 04 -
 
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
@@ -94,7 +94,7 @@ exports.createSauce        =  (request, response, next) => {  // 04.
     };
 
 };
-exports.likeOrDislikeSauce = (request, response, next) => {   // 05.
+exports.likeOrDislikeSauce = (request, response, next) => {   // - 05 -
 
     const like = request.body.like;
     const userId = request.body.userId;
@@ -147,7 +147,7 @@ exports.likeOrDislikeSauce = (request, response, next) => {   // 05.
         .catch(error => response.status(401).json({message : error}));
 
 };
-exports.modifySauce        = (request, response, next) => {   // 06.
+exports.modifySauce        = (request, response, next) => {   // - 06 -
 
     const sauceObject = request.file ?
     {
@@ -225,7 +225,7 @@ exports.modifySauce        = (request, response, next) => {   // 06.
     };
 
 };
-exports.deleteSauce        =  (request, response, next) => {  // 07.
+exports.deleteSauce        = (request, response, next) => {   // - 07 -
 
     const token = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
@@ -258,14 +258,14 @@ exports.deleteSauce        =  (request, response, next) => {  // 07.
 
 
 };
-exports.getOneSauce        = (request, response, next) => {   // 08.
+exports.getOneSauce        = (request, response, next) => {   // - 08 -
 
     Sauce.findOne({ _id: request.params.id })
     .then(sauce => response.status(200).json(sauce))
     .catch(error => response.status(404).json({ error }));
 
 };
-exports.getAllSauce        =  (request, response, next) => {  // 09.
+exports.getAllSauce        = (request, response, next) => {   // - 09 -
 
     Sauce.find()
         .then(sauces => response.status(200).json(sauces))

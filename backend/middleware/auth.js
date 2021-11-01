@@ -12,9 +12,9 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const jwt           = require('jsonwebtoken');      // 01.
+const jwt           = require('jsonwebtoken');      // - 01 -
 
-const environnement = require('dotenv')             // 02.
+const environnement = require('dotenv')             // - 02 -
 environnement.config();
 /* ################################################ */
 
@@ -22,7 +22,7 @@ environnement.config();
 
 /* ############   MIDDLEWARE    ################### */
 
-module.exports = (request, response, next) => {    // 03.
+module.exports = (request, response, next) => {     // - 03 -
 
     try {
 

@@ -14,8 +14,8 @@
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const multer     = require('multer');               // 01.
-const MIME_TYPES = {                                // 02.
+const multer     = require('multer');               // - 01 -
+const MIME_TYPES = {                                // - 02 -
 
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
@@ -27,7 +27,7 @@ const MIME_TYPES = {                                // 02.
 
 
 /* ##############   MIDDLEWARE   ################## */
-const storage = multer.diskStorage({                // 03.
+const storage = multer.diskStorage({                // - 03 -
 
     destination: (request, file, callback) => {
         callback(null, 'images');
@@ -44,6 +44,6 @@ const storage = multer.diskStorage({                // 03.
 
 
 /* ##############   EXPORT   ###################### */
-                                                    // 04.
+                                                    // - 04 -
 module.exports = multer({storage: storage}).single('image');
 /* ################################################ */
