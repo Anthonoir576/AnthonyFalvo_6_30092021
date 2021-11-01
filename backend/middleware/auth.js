@@ -1,20 +1,28 @@
 
+/** ---- JS DOCUMENTATION AUTH.JS ----
+ * 
+ * 01. 
+ * 
+ * 02.  
+ * 
+ * 03.
+ * 
+ */
+
+
+
 /* ##########   MES DECLARATIONS   ################ */
+const jwt = require('jsonwebtoken');                // 01. Importantion jwt token
 
-// Importantion jwt token
-const jwt = require('jsonwebtoken');
-
-// Importation de la dépendance dotenv
-const environnement = require('dotenv');
+const environnement = require('dotenv')             // 02. Importation de la dépendance dotenv
 environnement.config();
-
 /* ################################################ */
 
 
 
 /* ############   MIDDLEWARE    ################### */
 
-module.exports = (request, response, next) => {
+module.exports = (request, response, next) => {    // 03. EXPORT    
 
     try {
 

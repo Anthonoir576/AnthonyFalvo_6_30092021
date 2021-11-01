@@ -1,23 +1,14 @@
 
 /* ##########   MES DECLARATIONS   ################ */
-
-// importation modèle de SAUCE depuis le fichier js
-const Sauce = require('../models/Sauce');
-
-// File system 
-const fs = require('fs');
-
-// Importantion jwt token
-const jwt = require('jsonwebtoken');
-
+const Sauce = require('../models/Sauce');           // 01. importation modèle de SAUCE depuis le fichier js
+const fs    = require('fs');                        // 02. File system 
+const jwt   = require('jsonwebtoken');              // 03. Importantion jwt token
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-
-// Creation d'une nouvelle sauce dans la DB
-exports.createSauce =  (request, response, next) => {
+exports.createSauce =  (request, response, next) => {       // 04. Creation SAUCE   
 
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
@@ -80,8 +71,7 @@ exports.createSauce =  (request, response, next) => {
 
 };
 
-// like ou dislike les sauces
-exports.likeOrDislikeSauce = (request, response, next) => {
+exports.likeOrDislikeSauce = (request, response, next) => { // 05. Like/Dislike SAUCE     
 
     const like = request.body.like;
     const userId = request.body.userId;
@@ -135,8 +125,7 @@ exports.likeOrDislikeSauce = (request, response, next) => {
 
 };
 
-// Modification d'une sauce de la DB
-exports.modifySauce = (request, response, next) => {
+exports.modifySauce = (request, response, next) => {        // 06. Update SAUCE  
 
     const sauceObject = request.file ?
     {
@@ -215,8 +204,7 @@ exports.modifySauce = (request, response, next) => {
 
 };
 
-// Suppression d'une sauce de la DB
-exports.deleteSauce =  (request, response, next) => {
+exports.deleteSauce =  (request, response, next) => {       // 07. Delete SAUCE    
 
     const token = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
@@ -250,8 +238,7 @@ exports.deleteSauce =  (request, response, next) => {
 
 };
 
-// Recupere d'une sauce de la DB
-exports.getOneSauce = (request, response, next) => {
+exports.getOneSauce = (request, response, next) => {        // 08. LIRE SAUCE   
 
     Sauce.findOne({ _id: request.params.id })
     .then(sauce => response.status(200).json(sauce))
@@ -259,13 +246,11 @@ exports.getOneSauce = (request, response, next) => {
 
 };
 
-// Recupere toutes les sauces de la DB
-exports.getAllSauce =  (request, response, next) => {
+exports.getAllSauce =  (request, response, next) => {       // 09. LIRE LES SAUCES    
 
     Sauce.find()
         .then(sauces => response.status(200).json(sauces))
         .catch(error => response.status(400).json({ error }));
 
 };
-
 /* ################################################ */

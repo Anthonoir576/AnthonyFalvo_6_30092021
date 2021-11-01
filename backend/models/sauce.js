@@ -1,17 +1,12 @@
 
 /* ##########   MES DECLARATIONS   ################ */
-
-// importation package => mongoose
-const mongoose = require('mongoose');
-
+const mongoose = require('mongoose');               // 01. importation package => mongoose
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-
-// Fonction Schema fournis par le package mongoose permet de créer un schema type que l'on a besoin pour la création d'une nouvelle sauce
-const sauceSchema = mongoose.Schema({
+const sauceSchema = mongoose.Schema({               // 02. Schema SAUCE   
 
     userId: { type: String, required: true },
     name: { type: String, required: true }, 
@@ -26,14 +21,11 @@ const sauceSchema = mongoose.Schema({
     usersDisliked : [ { type: String } ] 
 
 });
-
 /* ################################################ */
 
 
 
 /* ##############    EXPORT     ################### */
-
-// Export du shéma de sauce créer Sauce serra le nom de l'objet crée et saucheSchema le modèle a utilisé 
+                                                    // 03. EXPORT
 module.exports = mongoose.model('Sauce', sauceSchema);
-
 /* ################################################ */

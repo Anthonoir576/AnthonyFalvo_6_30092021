@@ -5,25 +5,18 @@
 const bcrypt = require('bcrypt');
 
 // Importation de token et verification
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');                // 01. TOKEN
+const User = require('../models/User');             // 02. Importation modèle de USER
+const crypto = require('crypto-js');                // 03. Importation cryptos-JS
 
-// Importation modèle de USER depuis le fichier js
-const User = require('../models/User');
-
-// Importation cryptos-JS
-const crypto = require('crypto-js');
-
-// Importation de la dépendance dotenv
-const environnement = require('dotenv');
+const environnement = require('dotenv');            // 04. Importation de la dépendance dotenv
 environnement.config();
-
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-
-exports.signup = (request, response, next) => {
+exports.signup = (request, response, next) => {      // 05. S'ENREGISTRER   
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
     
@@ -41,7 +34,7 @@ exports.signup = (request, response, next) => {
 
 };
 
-exports.login = (request, response, next) => {
+exports.login = (request, response, next) => {       // 06. SE CONNECTER   
 
     const chiffrementMail = crypto.HmacSHA256(request.body.email, `${process.env.CRYPTO_KEY}`).toString();
 
@@ -69,5 +62,4 @@ exports.login = (request, response, next) => {
     .catch(error => response.status(500).json({ error })); 
 
 };
-
 /* ################################################ */

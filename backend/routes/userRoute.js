@@ -1,27 +1,23 @@
 
 /* ##########   MES DECLARATIONS   ################ */
-const express = require('express');
-const router = express.Router();
+const express = require('express');                         // 01.
+const router  = express.Router();                           // 02. 
 
-// Controle password
-const password = require('../middleware/password');
-
-// Importation des controllers USER => logique de routing
-const userCtrl = require('../controllers/userControllers');
+const password = require('../middleware/password');         // 03. Controle password     
+const userCtrl = require('../controllers/userControllers'); // 04. Importation des controllers
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-
+                                                            // 05.
 router.post('/signup', password, userCtrl.signup);
 router.post('/login', userCtrl.login);
-
 /* ################################################ */
 
 
 
 
 /* ##############    EXPORT     ################### */
-module.exports = router;
+module.exports = router;                                    // 06. 
 /* ################################################ */
