@@ -13,7 +13,7 @@
  * 
  * 06. S'ENREGISTRER : Crypto chiffre l'adresse email. Bcrypt hash le mot de passe, et crée un nouvel utilisateur, avec les informations sécurisé avant la sauvegarde dans la base de données. 
  * 
- * 07. CE CONNECTER : L'email crypté est comparer a celui crypté dans la base de données, si l'utilisateur est présent, et que le mot de passe est valide, alors la connection s'effectue. Dans le cas ou l'email est introuvable => erreur, et si le mot de passe est incorrecte => erreur. Une fois ceci vérifié un token est crée pour l'utilisateur, avec une durée d'expiration de 24h.
+ * 07. CE CONNECTER : L'email crypté est comparer a celui crypté dans la base de données, si l'utilisateur est présent, et que le mot de passe est valide, alors la connection s'effectue. Dans le cas ou l'email est introuvable => erreur, et si le mot de passe est incorrecte => erreur. Une fois ceci vérifié un token est crée pour l'utilisateur, avec une durée d'expiration de 24h. Le TOKEN prend en premiere argument les données que l'on veut encoder, en l'occurence, le userId, qui nous permettra notamment de verifier par la suite que l'utilisateur correspond bien a l'objet choisis pour appliquer les modifications necessaire. le second, la clé secrete, et le troisième la durée de valabilité de ce token.
  * 
  */
 
@@ -64,7 +64,7 @@ exports.login  = (request, response, next) => {     // - 07 -
             .then(valid => {
                 if(!valid) {
                     
-                    return response.status(403).json({ message: 'Mot de passe incorrect !'});
+                    return response.status(401).json({ message: 'Mot de passe incorrect !'});
                 }
                 response.status(200).json({
                     userId: user._id,
