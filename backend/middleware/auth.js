@@ -7,7 +7,7 @@
  * 
  * 03. Appel de la variable d'environnement .env ( ou .env.example), nous permettant de ne pas mélangé nos informations sensible, via un dépôt tel que github. Ainsi garder certain élément "confidentiel", tel que les données de connection mongoDB admin, les mots de passes, etc.. Voir .env.example pour en savoir plus.
  * 
- * 04. Contrôle du token utilisateur a chaque route requise : 
+ * 04. Contrôle du token utilisateur a chaque route requise. La variable token recupere un tableau contenant bearer et le token, on recupere l'index [1] donc le token. decodedToken decode le token via la clé secret, ainsi userID correspond au token decoder et recupere donc l'userId de l'utilisateur correspondant.
  * 
  */
 
@@ -33,6 +33,7 @@ module.exports = (request, response, next) => {     // - 04 -
         const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
         const userId = decodedToken.userId;
 
+
         if (request.body.userId && request.body.userId !== userId) {
 
             throw ' User ID non valable !';
@@ -47,7 +48,7 @@ module.exports = (request, response, next) => {     // - 04 -
 
         mongooseError(
                 
-            response.status(401).json({ message : '[ ERREUR ] : ECHEC Authentification '})
+            response.status(401).json({ error: error || '[ ERREUR ] : ECHEC Authentification '})
             
         );
 
