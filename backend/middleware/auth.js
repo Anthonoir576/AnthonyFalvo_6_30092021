@@ -24,7 +24,6 @@ environnement.config();
 
 
 /* ############   MIDDLEWARE    ################### */
-
 module.exports = (request, response, next) => {     // - 04 -
 
     try {
@@ -42,7 +41,7 @@ module.exports = (request, response, next) => {     // - 04 -
 
             next();
 
-        }
+        };
 
     } catch (error) {
 
@@ -55,5 +54,4 @@ module.exports = (request, response, next) => {     // - 04 -
     }
 
 };
-
 /* ################################################ */
