@@ -1,11 +1,11 @@
 
 /** ---- JS DOCUMENTATION SAUCE.JS ----
  * 
- * 01. 
+ * 01. Importation mongoose
  * 
- * 02.  
+ * 02. Schema sauce, permettant de respecter une certaine structure a envoyé dans la base de donnée
  * 
- * 03.
+ * 03. Export du modèle de sauce
  * 
  */
 

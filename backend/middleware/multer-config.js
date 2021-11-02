@@ -1,13 +1,13 @@
 
 /** ---- JS DOCUMENTATION MULTER-CONFIG.JS ----
  * 
- * 01. 
+ * 01. Importation de multer 
  * 
- * 02.  
+ * 02. Objet javaScript, permettant de récupéré le même type d'extension que celui de l'image selectionner. 
  * 
- * 03.
+ * 03. Fonction multer permettant
  * 
- * 04.
+ * 04. Exportation de multer
  * 
  */
 

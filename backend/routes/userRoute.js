@@ -1,17 +1,17 @@
 
 /** ---- JS DOCUMENTATION USERROUTE.JS ----
  * 
- * 01. 
+ * 01. Importation d'Express
  * 
- * 02.  
+ * 02. express.Router permet de créer des gestionnaires de route modulaires il définit des routes et monte le module de routeur sur un chemin dans l’app principale.
  * 
- * 03.
+ * 03. Importation du controle password (limite de caractère)
  * 
- * 04.
+ * 04. Importation controllers (ligique metier des utilisateurs [ Enregistrement, Connexion])
  * 
- * 05.
+ * 05. Les différentes route utilisateur.
  * 
- * 06.
+ * 06. Export router
  * 
  */
 
@@ -31,7 +31,6 @@ const userCtrl = require('../controllers/userControllers'); // - 04 -
 router.post('/signup', password, userCtrl.signup);
 router.post('/login', userCtrl.login);
 /* ################################################ */
-
 
 
 

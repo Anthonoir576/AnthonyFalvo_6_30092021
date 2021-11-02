@@ -1,19 +1,19 @@
 
 /** ---- JS DOCUMENTATION SAUCEROUTE.JS ----
  * 
- * 01. 
+ * 01. Importation express
  * 
- * 02.  
+ * 02. express.Router permet de créer des gestionnaires de route modulaires il définit des routes et monte le module de routeur sur un chemin dans l’app principale.
  * 
- * 03.
+ * 03. Importation controllers (logique metier des sauces)
  * 
- * 04.
+ * 04. Importation authentification via token
  * 
- * 05.
+ * 05. Importation de multer-config afin de stocker les images dans le dossier /images/
  * 
- * 06.
+ * 06. Les différentes route sauce. 
  * 
- * 07.
+ * 07. Export router
  * 
  */
 

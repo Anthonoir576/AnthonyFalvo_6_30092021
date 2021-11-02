@@ -1,38 +1,41 @@
 
 /** ---- JS DOCUMENTATION SAUCECONTROLLERS.JS ----
  * 
- * 01. 
+ * 01. Importation du modèle de sauce
  * 
- * 02.  
+ * 02. Importation de fil system de node.js
  * 
- * 03.
+ * 03. Importation de JWT afin de verifier une deuxième fois au moment de la modification ou suppression d'une sauce que l'utilisateur et bien le propriétaire.
  * 
- * 04.
+ * 04. Importation de mongooseError, afin de traiter certaines erreurs.
  * 
- * 05.
+ * 05. CREATION SAUCE : créer une sauce uniquement si l'utilisateur utilise des caractères, sinon la sauce n'est pas crée, et l'image enregistrer par multer est supprimer.
  * 
- * 06.
+ * 06. LIKE OU DISLIKE SAUCE : Permet de liker nou disliker une sauce via une condition simple
  * 
- * 07.
+ * 07. MODIFIER SAUCE : modifie une sauce uniquement si les caractères sont correctes, et si l'utilisateur et bien le propriétaire de la sauce, via une seconde verification du token. Sinon erreur, et si les caractères sont incorrecte, la sauce reviens a sont format avant modification. Si la sauce est modifier et que l'image ne l'est pas, aucun doublon, les informations sont mises à jour, si l'image est mise a jour, l'ancienne est supprimer avant la mise a jour, aucun doublon non plus. Toutes les informations sont donc mise a jour sur la base de données.
  * 
- * 08.
+ * 08. SUPPRIMER SAUCE : La sauce est supprimer uniquement lors que la seconde authentification est confirmer via le token. Afin d'être sur que le propriétaire et bien le créateur de la sauce. Si c'est le cas, l'image est supprimer et la sauce aussi de la base de données.
  * 
- * 09.
+ * 09. RECUPERER UNE SAUCE : Recupere une sauce via l'identifiant dans la requete, et compare a celle dans la base de données.
+ * 
+ * 10. RECUPERER TOUTES LES SAUCES : Recupere toutes les sauces de la base de données.
  * 
  */
 
 
 
 /* ##########   MES DECLARATIONS   ################ */
-const Sauce = require('../models/Sauce');                     // - 01 -
-const fs    = require('fs');                                  // - 02 -
-const jwt   = require('jsonwebtoken');                        // - 03 -
+const Sauce         = require('../models/Sauce');             // - 01 -
+const fs            = require('fs');                          // - 02 -
+const jwt           = require('jsonwebtoken');                // - 03 -
+const mongooseError = require('mongoose-error');              // - 04 -
 /* ################################################ */
 
 
 
 /* ############   CONTROLLERS   ################### */
-exports.createSauce        = (request, response, next) => {   // - 04 -
+exports.createSauce        = (request, response, next) => {   // - 05 -
 
     const sauceObject = JSON.parse(request.body.sauce);
     delete sauceObject._id;
@@ -61,40 +64,31 @@ exports.createSauce        = (request, response, next) => {   // - 04 -
 
         sauce.save()
             .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
-            .catch(error => response.status(400).json({ error }));
+            .catch(error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
 
     } else {
 
-        try {
+        // Suppression img si condition pas respecter
+        const filename = request.file.filename;
 
-            // Suppression img si condition pas respecter
-            const filename = request.file.filename;
+        fs.unlink(`images/${filename}`,(error) => {
 
-            fs.unlink(`images/${filename}`,(error) => {
+            if (error) { 
+                throw error;
+            };
+            
+        });
 
-                if (error) { 
-                    
-                    throw error
-                    
-                };
-
-                console.log('Fichier supprimé !');
-            });
-
-            throw 'Requête non autorisée !';
-
-
-        } catch (error) {
-
-            response.status(401).json({ error: error | 'Requête non autorisée !'});
-
-        };
-
+        mongooseError(
+                
+            response.status(403).json({ message : 'ERREUR : Les caractères sont obligatoires !'})
+            
+        );
 
     };
 
 };
-exports.likeOrDislikeSauce = (request, response, next) => {   // - 05 -
+exports.likeOrDislikeSauce = (request, response, next) => {   // - 06 -
 
     const like = request.body.like;
     const userId = request.body.userId;
@@ -141,13 +135,13 @@ exports.likeOrDislikeSauce = (request, response, next) => {   // - 05 -
 
             sauce.save()
                  .then(() => response.status(200).json({ message: userChoice }))
-                 .catch(error => response.status(500).json({ error }));
+                 .catch(error => response.status(500).json({ error: '=> [ ' + error + ' ]' }));
 
         })
-        .catch(error => response.status(401).json({message : error}));
+        .catch(error => response.status(401).json({ error : '=> [ ' + error + ' ]' }));
 
 };
-exports.modifySauce        = (request, response, next) => {   // - 06 -
+exports.modifySauce        = (request, response, next) => {   // - 07 -
 
     const sauceObject = request.file ?
     {
@@ -191,7 +185,7 @@ exports.modifySauce        = (request, response, next) => {   // - 06 -
 
                     Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
                     .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
-                    .catch( error => response.status(400).json({ error }));
+                    .catch( error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
 
                 // Suppression de la photo précédente avant => update    
                 } else {
@@ -199,7 +193,7 @@ exports.modifySauce        = (request, response, next) => {   // - 06 -
                     fs.unlink(`images/${filename}`, () => {
                         Sauce.updateOne({ _id: request.params.id }, { ...sauceObject, _id: request.params.id })
                         .then(() => response.status(200).json({ message: 'Sauce modifiée ! '}))
-                        .catch( error => response.status(400).json({ error }));
+                        .catch( error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
                     });
 
                 };
@@ -212,7 +206,7 @@ exports.modifySauce        = (request, response, next) => {   // - 06 -
             };
 
         })
-        .catch( error => response.status(500).json({ error }));
+        .catch( error => response.status(500).json({ error: '=> [ ' + error + ' ]' }));
 
     
     // si il met des espaces, et que le if n'est pas pas rempli, alors retour a la valeur d'origine déjà renseigner     
@@ -220,12 +214,12 @@ exports.modifySauce        = (request, response, next) => {   // - 06 -
 
         Sauce.findOne({ _id: request.params.id })
         .then(sauce => response.status(200).json(sauce))
-        .catch(error => response.status(404).json({ error }));
+        .catch(error => response.status(404).json({ error: '=> [ ' + error + ' ]' }));
 
     };
 
 };
-exports.deleteSauce        = (request, response, next) => {   // - 07 -
+exports.deleteSauce        = (request, response, next) => {   // - 08 -
 
     const token = request.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, `${process.env.TOKEN_KEY}`);
@@ -242,7 +236,7 @@ exports.deleteSauce        = (request, response, next) => {   // - 07 -
                 fs.unlink(`images/${filename}`, () => {
                     Sauce.deleteOne({ _id: request.params.id})
                     .then(() => response.status(200).json({ message: 'Sauce supprimée !'}))
-                    .catch(error => response.status(400).json({ error }));
+                    .catch(error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
                 });
             
             // SINON ERREUR
@@ -253,23 +247,23 @@ exports.deleteSauce        = (request, response, next) => {   // - 07 -
             };
         
         })
-        .catch( error => response.status(500).json({ error }));
+        .catch( error => response.status(500).json({ error: '=> [ ' + error + ' ]' }));
 
 
 
 };
-exports.getOneSauce        = (request, response, next) => {   // - 08 -
+exports.getOneSauce        = (request, response, next) => {   // - 09 -
 
     Sauce.findOne({ _id: request.params.id })
     .then(sauce => response.status(200).json(sauce))
-    .catch(error => response.status(404).json({ error }));
+    .catch(error => response.status(404).json({ error: '=> [ ' + error + ' ]' }));
 
 };
-exports.getAllSauce        = (request, response, next) => {   // - 09 -
+exports.getAllSauce        = (request, response, next) => {   // - 10 -
 
     Sauce.find()
         .then(sauces => response.status(200).json(sauces))
-        .catch(error => response.status(400).json({ error }));
+        .catch(error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
 
 };
 /* ################################################ */

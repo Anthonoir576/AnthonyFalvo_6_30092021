@@ -3,9 +3,11 @@
  * 
  * 01. Importation de la dépendance password-validator
  * 
- * 02. Création d'un schema permettant de donné certaine condition, tel que le nombre minimum de caractère, majuscule, minuscule etc.. 
+ * 02. Importation de la dépendance mongooseError
  * 
- * 03. Exportation du schema 
+ * 03. Création d'un schema permettant de donné certaine condition, tel que le nombre minimum de caractère, majuscule, minuscule etc.. 
+ * 
+ * 04. Exportation du schema 
  * 
  */
 
@@ -13,12 +15,13 @@
 
 /* ##########   MES DECLARATIONS   ################ */
 const password = require('password-validator');     // - 01 -
+const mongooseError = require('mongoose-error');    // - 02 - 
 /* ################################################ */
 
 
 
 /* ################  SCHEMA  ###################### */
-const passwordSchema = new password();              // - 02 -
+const passwordSchema = new password();              // - 03 -
 
 passwordSchema
 .is().min(4)
@@ -33,16 +36,29 @@ passwordSchema
 
 
 /* ##############    EXPORT     ################### */
-module.exports = (request, response, next) => {     // - 03 -
+module.exports = (request, response, next) => {     // - 04 -
 
-    if(passwordSchema.validate(request.body.password)) {
+    try {
+        
+        if(passwordSchema.validate(request.body.password)) {
 
-        return next();
+            return next();
+    
+        } else {
+    
+            throw 'error';
+    
+        };
 
-    } else {
-
-        return response.status(40).json({ error: " Le mot de passe doit contenir au minimum 4 caractères, et au maximum 20 caractères"});
+    } catch (error) {
+        
+        mongooseError(
+                
+            response.status(403).json({ message : 'ERREUR : Le mot de passe doit contenir au minimum 4 caractères, et au maximum 20 caractères !'})
+            
+        );
 
     };
+
 };
 /* ################################################ */
