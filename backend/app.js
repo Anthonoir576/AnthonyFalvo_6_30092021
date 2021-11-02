@@ -13,7 +13,7 @@
  * 
  * 06. Importation des routes user, toutes les requêtes liées aux utilisateurs passeront par le fichier userRoute.js, enregistrement, authentification.
  * 
- * 07. ????????
+ * 07. Path methode de node, nous donne acces au chemin de notre systeme de fichier.
  * 
  * 08. Appel de la variable d'environnement .env ( ou .env.example), nous permettant de ne pas mélangé nos informations sensible, via un dépôt tel que github. Ainsi garder certain élément "confidentiel", tel que les données de connection mongoDB admin, les mots de passes, etc.. Voir .env.example pour en savoir plus.
  * 
@@ -35,7 +35,7 @@
  * 
  * 12. Permet de convertir le corp de la requête en objet JSON exploitable. Depuis une certaine mise a jour, on utilise cette methode, avant on utilisait body-parser. Qui maintenant est inclue dans les dépendances d'express (Voir node_modules).
  * 
- * 13. ?????????????????
+ * 13. MIDDLEWARE qui autorise les requêtes sur le dossier image. la methode static de express prendra comme argument le path, donc le chemin du dossier. path.join() prends en argument __dirname, donc le nom du fichier dans lequel on va ce trouver auquel on ajoute 'images'.
  * 
  * 14. Middleware des routes sauces via le fichier sauceRoute.js, et agira en fonction des configurations crée dans ce fichier.
  * 
