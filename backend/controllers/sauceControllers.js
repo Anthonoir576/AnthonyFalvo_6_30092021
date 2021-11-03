@@ -65,7 +65,29 @@ exports.createSauce        = (request, response, next) => {   // - 05 -
         sauce.save()
             .then(() => response.status(201).json({ message: 'Sauce ajoutée !'}))
             .catch(error => response.status(400).json({ error: '=> [ ' + error + ' ]' }));
+    
+    // Trop de caractère
+    } else if (nom.trim().length > 15 || manufacturer.trim().length > 25 ||
+    description.trim().length > 250 || mainPepper.trim().length > 30) {
 
+        // Suppression img si condition pas respecter
+        const filename = request.file.filename;
+
+        fs.unlink(`images/${filename}`,(error) => {
+
+            if (error) { 
+                throw error;
+            };
+            
+        });
+
+        mongooseError(
+                
+            response.status(403).json({ message : 'ERREUR : Les caractères sont trop nombreux !'})
+            
+        );
+        
+    // Uniquement des espaces
     } else {
 
         // Suppression img si condition pas respecter
