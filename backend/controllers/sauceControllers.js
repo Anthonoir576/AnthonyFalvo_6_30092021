@@ -46,10 +46,10 @@ exports.createSauce        = (request, response, next) => {   // - 05 -
     let mainPepper = sauceObject.mainPepper;
 
     // Condition de verification pour eviter quun user met que des espaces 
-    if (nom.trim().length >= 3 &&
-        manufacturer.trim().length >= 3 &&
-        description.trim().length >= 3 &&
-        mainPepper.trim().length >= 3) {
+    if ((nom.trim().length >= 3 && nom.trim().length < 15) &&
+        (manufacturer.trim().length >= 3 && manufacturer.trim().length < 25) &&
+        (description.trim().length >= 3 && description.trim().length < 250) &&
+        (mainPepper.trim().length >= 3 && mainPepper.trim().length < 30)) {
 
             const sauce = new Sauce({
 
@@ -167,10 +167,10 @@ exports.modifySauce        = (request, response, next) => {   // - 07 -
 
     
     // Condition de verification pour eviter quun user met que des espaces 
-    if (nom.trim().length >= 3 &&
-        manufacturer.trim().length >= 3 &&
-        description.trim().length >= 3 && 
-        mainPepper.trim().length >= 3) {
+    if ((nom.trim().length >= 3 && nom.trim().length < 15) &&
+    (manufacturer.trim().length >= 3 && manufacturer.trim().length < 25) &&
+    (description.trim().length >= 3 && description.trim().length < 250) &&
+    (mainPepper.trim().length >= 3 && mainPepper.trim().length < 30)) {
 
         Sauce.findOne({ _id: request.params.id})
         .then(sauce => {

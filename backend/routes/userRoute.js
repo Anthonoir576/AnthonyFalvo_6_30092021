@@ -20,7 +20,8 @@
 /* ##########   MES DECLARATIONS   ################ */
 const express  = require('express');                        // - 01 -
 const router   = express.Router();                          // - 02 -
-const password = require('../middleware/password');         // - 03 -    
+const password = require('../middleware/password');         // - 03 - 
+const mail     = require('../middleware/email');   
 const userCtrl = require('../controllers/userControllers'); // - 04 -
 /* ################################################ */
 
@@ -28,7 +29,7 @@ const userCtrl = require('../controllers/userControllers'); // - 04 -
 
 /* ############   CONTROLLERS   ################### */
                                                             // - 05 -
-router.post('/signup', password, userCtrl.signup);
+router.post('/signup', mail, password, userCtrl.signup);
 router.post('/login', userCtrl.login);
 /* ################################################ */
 
