@@ -57,14 +57,14 @@ exports.login  = (request, response, next) => {     // - 07 -
     .then(user => {
         if(!user) {
             
-            return response.status(404).json({ message: 'Aucun compte via cette adresse e-mail !' });
+            return response.status(404).json({ message: 'Mot de passe ou e-mail incorrect !' });
  
         }
         bcrypt.compare(request.body.password, user.password)
             .then(valid => {
                 if(!valid) {
                     
-                    return response.status(401).json({ message: 'Mot de passe incorrect !'});
+                    return response.status(404).json({ message: 'Mot de passe ou e-mail incorrect !'});
                 }
                 response.status(200).json({
                     userId: user._id,
